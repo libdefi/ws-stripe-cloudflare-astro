@@ -1,40 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-const now = new Date()---
+import Card from '../components/Card.astro'
+const {
+	PUBLIC_STRIPE_PUBLISHABLE_API_KEY,
+	PUBLIC_STRIPE_PRICING_TABLE_ID,
+	PUBLIC_STIPE_CUSTOMER_PORTAL_URL,
+} = import.meta.env;
 
+---
 
-
+<script>
+	console.log("@@@=", import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_API_KEY);
+	console.log("@@@=", import.meta.env.PUBLIC_STRIPE_PRICING_TABLE_ID);
+</script>
 
 <Layout title="Welcome to Astro.">
 	<main>
-		<h1>現在<span class="text-gradient">{`${now.getHours()}時${now.getMinutes()}分${now.getSeconds()}秒`}</span>です</h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https:/docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
+		<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+		<stripe-pricing-table pricing-table-id={import.meta.env.PUBLIC_STRIPE_PRICING_TABLE_ID}
+		publishable-key={import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_API_KEY}>
+		</stripe-pricing-table>
+		
+		<a
+			href={import.meta.env.PUBLIC_STIPE_CUSTOMER_PORTAL_URL}
+			target="_blank"
+			rel="noreferrer noopener"
+		>マイページ (メール認証)</a>
 	</main>
 </Layout>
 
